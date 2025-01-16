@@ -1,31 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'app_theme.dart';
-import 'screens/home_screen.dart';
-import 'screens/login_screen.dart';
-import 'screens/onboarding_screen.dart';
-import 'screens/profile_screen.dart';
-import 'screens/statistics_screen.dart';
+import 'data/repository/auth_repository.dart';
+import 'finance_tracker_app.dart';
 
-void main() {
-  runApp(const FinanceApp());
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  final authRepository = AuthRepository();
 
-class FinanceApp extends StatelessWidget {
-  const FinanceApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: OnboardingScreen.routeName,
-      home: const HomeScreen(),
-      theme: AppTheme.mainTheme(),
-      routes: {
-        OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        StatisticsScreen.routeName: (context) => const StatisticsScreen(),
-        ProfileScreen.routeName: (context) => const ProfileScreen(),
-      },
-    );
-  }
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (_) => authRepository),
+      ],
+      child: const FinanceTrackerApp(),
+    ),
+  );
 }
