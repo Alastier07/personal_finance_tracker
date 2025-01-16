@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants/color.dart';
+import 'core/constants/color.dart';
 
 class AppTheme {
   static mainTheme() => ThemeData.light(
