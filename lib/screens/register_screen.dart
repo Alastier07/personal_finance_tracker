@@ -3,55 +3,58 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/auth/auth_bloc.dart';
 import '../blocs/auth/auth_event.dart';
-import '../blocs/login/login_bloc.dart';
-import '../blocs/login/login_event.dart';
-import '../blocs/login/login_state.dart';
+import '../blocs/register/register_bloc.dart';
+import '../blocs/register/register_event.dart';
+import '../blocs/register/register_state.dart';
 import '../core/constants/color.dart';
 import '../core/utils/dialog_utils.dart';
 import '../widgets/login/login_input_password_widget.dart';
 import 'home_screen.dart';
-import 'register_screen.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
-  static const String routeName = '/login';
+  static const String routeName = '/signup';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) {
-          if (state is LoginLoading) {
-            showLoadingDialog(context);
-          } else if (state is LoginStopLoading) {
-            hideDialog(context);
-          } else if (state is LoginSuccess) {
-            context.read<AuthBloc>().add(LoggedIn());
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              HomeScreen.routeName,
-              (route) => false,
-            );
-          } else if (state is LoginFailure) {
-            showErrorDialog(context, state.errorMessage);
-          }
-        },
+    return BlocListener<RegisterBloc, RegisterState>(
+      listener: (context, state) {
+        if (state is RegisterLoading) {
+          showLoadingDialog(context);
+        } else if (state is RegisterStopLoading) {
+          hideDialog(context);
+        } else if (state is RegisterSuccess) {
+          context.read<AuthBloc>().add(LoggedIn());
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.routeName,
+            (route) => false,
+          );
+        } else if (state is RegisterFailure) {
+          showErrorDialog(context, state.errorMessage);
+        }
+      },
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           body: Center(
             child: Padding(
@@ -60,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Welcome',
+                    'Sign Up',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -71,26 +74,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: emailController,
+                          controller: _emailController,
                           decoration: const InputDecoration(
                             label: Text('Email'),
                           ),
                           keyboardType: TextInputType.emailAddress,
                         ),
                         LoginInputPasswordWidget(
-                            passwordController: passwordController),
+                          passwordController: _passwordController,
+                        ),
+                        LoginInputPasswordWidget(
+                          label: 'Confirm Password',
+                          passwordController: _confirmPasswordController,
+                        ),
                         const SizedBox(height: 32),
                         SizedBox(
                           width: double.infinity,
                           height: 40,
                           child: ElevatedButton(
-                            onPressed: () => context.read<LoginBloc>().add(
-                                  LoginWithEmailPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  ),
-                                ),
-                            child: const Text('Login'),
+                            onPressed: () {
+                              context.read<RegisterBloc>().add(
+                                    RegisterWithEmailAndPassword(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                      confirmPassword:
+                                          _confirmPasswordController.text,
+                                    ),
+                                  );
+                            },
+                            child: const Text('Sign Up'),
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -100,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const Text('Don\'t have an account? '),
                             InkWell(
                               child: const Text(
-                                'Sign up',
+                                'Sign in',
                                 style: TextStyle(
                                   color: primaryColor,
                                   fontWeight: FontWeight.w500,
@@ -108,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               onTap: () =>
                                   Navigator.of(context).pushNamedAndRemoveUntil(
-                                RegisterScreen.routeName,
+                                LoginScreen.routeName,
                                 (route) => false,
                               ),
                             )

@@ -20,11 +20,14 @@ class AuthRepository {
   }
 
   // Register
-  Future<bool> register({
+  Future<void> register({
     required String email,
     required String password,
   }) async {
-    return true;
+    await firebaseAuthIntance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 
   // Check if user is active

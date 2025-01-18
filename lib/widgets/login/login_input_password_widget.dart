@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class LoginInputPasswordWidget extends StatefulWidget {
   final TextEditingController passwordController;
+  final String? label;
 
   const LoginInputPasswordWidget({
     super.key,
     required this.passwordController,
+    this.label,
   });
 
   @override
@@ -22,7 +24,7 @@ class _LoginInputPasswordWidgetState extends State<LoginInputPasswordWidget> {
       controller: widget.passwordController,
       obscureText: _hidePassword,
       decoration: InputDecoration(
-        label: const Text('Password'),
+        label: Text(widget.label ?? 'Password'),
         suffixIcon: IconButton(
           onPressed: () {
             setState(() {
