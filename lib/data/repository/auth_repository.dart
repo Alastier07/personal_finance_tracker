@@ -4,15 +4,20 @@ class AuthRepository {
   final firebaseAuthIntance = FirebaseAuth.instance;
 
   // Login
-  Future<bool> login({
+  Future<void> login({
     required String email,
     required String password,
   }) async {
-    return true;
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 
   // Logout
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   // Register
   Future<bool> register({
@@ -25,7 +30,7 @@ class AuthRepository {
   // Check if user is active
   Future<bool> isLogin() async {
     final user = firebaseAuthIntance.currentUser;
-    await Future.delayed(const Duration(seconds: 2)); // add delay
+    await Future.delayed(const Duration(seconds: 1)); // add delay
 
     if (user == null) {
       return false;

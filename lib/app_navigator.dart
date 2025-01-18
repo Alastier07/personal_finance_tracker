@@ -11,26 +11,22 @@ class AppNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is Authenticated) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            HomeScreen.routeName,
-            (route) => false,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthInitial) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
+        } else if (state is Authenticated) {
+          return const HomeScreen();
         } else if (state is Unauthenticated) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            LoginScreen.routeName,
-            (route) => false,
-          );
+          return const LoginScreen();
         }
+
+        return Container();
       },
-      // Splash Screen
-      child: const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
     );
   }
 }

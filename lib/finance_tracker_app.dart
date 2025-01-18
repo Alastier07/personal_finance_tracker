@@ -5,6 +5,7 @@ import 'app_navigator.dart';
 import 'app_theme.dart';
 import 'blocs/auth/auth_bloc.dart';
 import 'blocs/auth/auth_event.dart';
+import 'blocs/login/login_bloc.dart';
 import 'screens/login_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/profile_screen.dart';
@@ -21,6 +22,11 @@ class FinanceTrackerApp extends StatelessWidget {
           create: (context) => AuthBloc(
             authRepository: RepositoryProvider.of(context),
           )..add(AppStarted()),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(
+            authRepository: RepositoryProvider.of(context),
+          ),
         ),
       ],
       child: MaterialApp(
