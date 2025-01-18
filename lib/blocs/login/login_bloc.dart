@@ -11,38 +11,41 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.authRepository,
   }) : super(LoginInitial()) {
     on<LoginWithEmailPassword>(
-      (event, emit) async {
-        if (!event.isValidEmail) {
-          emit(
-            LoginFailure(errorMessage: 'Invalid Email!'),
-          );
-          return;
-        }
-
-        if (!event.isValidPassword) {
-          emit(
-            LoginFailure(errorMessage: 'Invalid Password!'),
-          );
-          return;
-        }
-
-        emit(LoginLoading());
-
-        try {
-          await authRepository.login(
-            email: event.email,
-            password: event.password,
-          );
-
-          emit(LoginSuccess());
-        } catch (error) {
-          emit(LoginStopLoading());
-          print(error);
-          emit(
-            LoginFailure(errorMessage: 'Login Failed!'),
-          );
-        }
-      },
+      _onLoginWithEmailPassword,
     );
+  }
+
+  void _onLoginWithEmailPassword(event, emit) async {
+    print(!event.isValidEmail);
+    if (!event.isValidEmail) {
+      emit(
+        LoginFailure(errorMessage: 'Invalid Email!'),
+      );
+      return;
+    }
+
+    if (!event.isValidPassword) {
+      emit(
+        LoginFailure(errorMessage: 'Invalid Password!'),
+      );
+      return;
+    }
+
+    emit(LoginLoading());
+
+    try {
+      await authRepository.login(
+        email: event.email,
+        password: event.password,
+      );
+
+      emit(LoginSuccess());
+    } catch (error) {
+      emit(LoginStopLoading());
+      print(error);
+      emit(
+        LoginFailure(errorMessage: 'Login Failed!'),
+      );
+    }
   }
 }
