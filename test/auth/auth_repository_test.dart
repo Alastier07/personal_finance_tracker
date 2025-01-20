@@ -75,4 +75,59 @@ void main() {
       );
     },
   );
+
+  group(
+    'AuthRespository Registration',
+    () {
+      test(
+        'Successful Registration',
+        () async {
+          const String email = 'testuser2@test.com';
+          const String password = 'password123';
+
+          Future<UserCredential?> userRegistration() async =>
+              mockFirebaseAuth.createUserWithEmailAndPassword(
+                email: email,
+                password: password,
+              );
+
+          when(userRegistration()).thenAnswer((_) async => mockUserCredential);
+
+          when(mockUserCredential.user).thenReturn(mockUser);
+
+          final user = await authRepository.register(
+            email: email,
+            password: password,
+          );
+
+          expect(user, mockUser);
+
+          verify(userRegistration()).called(1);
+        },
+      );
+
+      test('Unsuccessful Registration - Email Already Exist', () {
+        const String email = 'testuser2@test.com';
+        const String password = 'password123';
+
+        when(mockFirebaseAuth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        )).thenThrow(
+          FirebaseAuthException(
+            code: 'email-already-exists',
+            message:
+                'The provided email is already in use by an existing user. Each user must have a unique email.',
+          ),
+        );
+
+        Future<void> authRegistration() async => authRepository.register(
+              email: email,
+              password: password,
+            );
+
+        expect(authRegistration, throwsException);
+      });
+    },
+  );
 }
