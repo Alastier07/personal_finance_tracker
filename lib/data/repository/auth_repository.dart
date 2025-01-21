@@ -19,8 +19,10 @@ class AuthRepository {
   }
 
   // Logout
-  Future<void> logout() async {
+  Future<bool> logout() async {
     await firebaseAuth.signOut();
+
+    return true;
   }
 
   // Register
