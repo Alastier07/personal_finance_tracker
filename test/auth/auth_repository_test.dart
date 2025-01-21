@@ -130,4 +130,33 @@ void main() {
       });
     },
   );
+
+  group(
+    'AuthRespository Logout',
+    () {
+      test(
+        'Successful Logout',
+        () async {
+          final logoutResult = await authRepository.logout();
+
+          expect(logoutResult, true);
+
+          verify(await authRepository.logout()).called(1);
+        },
+      );
+
+      test(
+        'Unsuccessful Logout',
+        () {
+          when(mockFirebaseAuth.signOut()).thenThrow(
+            Exception('Sign-out failed'),
+          );
+
+          Future<bool> logout() => authRepository.logout();
+
+          expect(logout(), throwsException);
+        },
+      );
+    },
+  );
 }
