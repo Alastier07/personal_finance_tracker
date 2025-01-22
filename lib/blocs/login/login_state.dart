@@ -14,11 +14,11 @@ class LoginStopLoading extends LoginState {}
 class LoginSuccess extends LoginState {}
 
 class LoginFailure extends LoginState {
-  final DateTime timestamp;
+  final DateTime? timestamp;
   final String errorMessage;
 
-  LoginFailure({required this.errorMessage}) : timestamp = DateTime.now();
+  LoginFailure({required this.errorMessage, this.timestamp});
 
   @override
-  List<Object> get props => [timestamp];
+  List<Object> get props => [timestamp ?? DateTime.now()];
 }
