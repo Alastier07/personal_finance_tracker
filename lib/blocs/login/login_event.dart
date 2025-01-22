@@ -12,5 +12,5 @@ class LoginWithEmailPassword extends LoginEvent {
   });
 
   bool get isValidEmail => email.contains('@');
-  bool get isValidPassword => password.length >= 8;
+  bool get isValidPassword => password.isNotEmpty;
 }
