@@ -23,8 +23,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<LoggedOut>((event, emit) async {
-      await authRepository.logout();
-      emit(Unauthenticated());
+      try {
+        await authRepository.logout();
+        emit(Unauthenticated());
+      } catch (error) {
+        print(error);
+        emit(
+          LogoutFailure(errorMessage: 'Something went wrong, please try again'),
+        );
+      }
     });
   }
 }
