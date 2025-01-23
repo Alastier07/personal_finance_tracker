@@ -11,12 +11,15 @@ class RegisterSuccess extends RegisterState {}
 
 class RegisterFailure extends RegisterState {
   final String errorMessage;
-  final DateTime timestamp;
+  final DateTime? timestamp;
 
-  RegisterFailure({required this.errorMessage}) : timestamp = DateTime.now();
+  RegisterFailure({
+    required this.errorMessage,
+    this.timestamp,
+  });
 
   @override
-  List<Object> get props => [timestamp];
+  List<Object> get props => [timestamp ?? DateTime.now()];
 }
 
 class RegisterLoading extends RegisterState {}
