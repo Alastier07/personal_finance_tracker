@@ -4,10 +4,10 @@ import 'package:personal_finance_tracker/data/repository/user_repository.dart';
 import 'user_event.dart';
 import 'user_state.dart';
 
-class UserBlock extends Bloc<UserEvent, UserState> {
+class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
 
-  UserBlock({required this.userRepository}) : super(UserInitial()) {
+  UserBloc({required this.userRepository}) : super(UserInitial()) {
     on<UserFetch>((event, emit) async {
       try {
         final user = userRepository.userInfo();
