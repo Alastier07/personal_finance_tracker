@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'data/repository/auth_repository.dart';
+import 'data/repository/user_repository.dart';
 import 'finance_tracker_app.dart';
 import 'firebase_options.dart';
 
@@ -14,11 +15,13 @@ void main() async {
   );
   final firebaseAuth = FirebaseAuth.instance;
   final authRepository = AuthRepository(firebaseAuth);
+  final userRepository = UserRepository(firebaseAuth);
 
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (_) => authRepository),
+        RepositoryProvider(create: (_) => userRepository),
       ],
       child: const FinanceTrackerApp(),
     ),
