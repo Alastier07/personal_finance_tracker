@@ -7,6 +7,8 @@ import 'blocs/auth/auth_bloc.dart';
 import 'blocs/auth/auth_event.dart';
 import 'blocs/login/login_bloc.dart';
 import 'blocs/register/register_bloc.dart';
+import 'blocs/user/user_bloc.dart';
+import 'screens/add_expense_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/profile_screen.dart';
@@ -35,6 +37,11 @@ class FinanceTrackerApp extends StatelessWidget {
             authRepository: RepositoryProvider.of(context),
           ),
         ),
+        BlocProvider(
+          create: (context) => UserBloc(
+            userRepository: RepositoryProvider.of(context),
+          ),
+        ),
       ],
       child: MaterialApp(
         // initialRoute: OnboardingScreen.routeName,
@@ -46,6 +53,7 @@ class FinanceTrackerApp extends StatelessWidget {
           RegisterScreen.routeName: (context) => const RegisterScreen(),
           StatisticsScreen.routeName: (context) => const StatisticsScreen(),
           ProfileScreen.routeName: (context) => const ProfileScreen(),
+          AddExpenseScreen.routeName: (context) => const AddExpenseScreen(),
         },
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/bottom_navbar_widget.dart';
 import '../widgets/transaction/transaction_history_widget.dart';
 import '../widgets/wallet_info_widget.dart';
+import 'add_expense_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,7 +35,8 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: const BottomNavbarWidget(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () =>
+            Navigator.of(context).pushNamed(AddExpenseScreen.routeName),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
