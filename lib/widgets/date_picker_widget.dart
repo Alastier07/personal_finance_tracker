@@ -6,9 +6,11 @@ class DatePickerWidget extends StatefulWidget {
   const DatePickerWidget({
     super.key,
     required this.controller,
+    required this.dateSelected,
   });
 
   final TextEditingController controller;
+  final Function(DateTime?) dateSelected;
 
   @override
   State<DatePickerWidget> createState() => _DatePickerWidgetState();
@@ -46,6 +48,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
     widget.controller.text =
         result == null ? widget.controller.text : defaultDateFormat(result);
+
+    widget.dateSelected(result);
 
     setState(() => _initialDate = result ?? _initialDate);
   }
