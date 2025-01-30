@@ -3,12 +3,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../model/user_model.dart';
 
 class UserRepository {
-  UserRepository(this.authFirebase);
+  UserRepository({this.authFirebase});
 
-  final FirebaseAuth authFirebase;
+  FirebaseAuth? authFirebase;
+
+  String _userName = '';
+  String get userName => _userName;
 
   UserModel userInfo() {
-    final user = authFirebase.currentUser!;
+    authFirebase ??= FirebaseAuth.instance;
+
+    final user = authFirebase!.currentUser!;
+
+    _userName = user.displayName ?? '';
 
     return UserModel(
       id: user.uid,

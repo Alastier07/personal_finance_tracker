@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/repository/user_repository.dart';
 import '../widgets/bottom_navbar_widget.dart';
 import '../widgets/transaction/transaction_history_widget.dart';
 import '../widgets/wallet_info_widget.dart';
@@ -12,9 +13,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userName = UserRepository().userName;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alastier Catayoc'),
+        title: Text(userName.isEmpty ? "Hello there!" : userName),
         actions: [
           IconButton(
             onPressed: () {},

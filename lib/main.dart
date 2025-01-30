@@ -15,7 +15,7 @@ void main() async {
   );
   final firebaseAuth = FirebaseAuth.instance;
   final authRepository = AuthRepository(firebaseAuth);
-  final userRepository = UserRepository(firebaseAuth);
+  final userRepository = UserRepository(authFirebase: firebaseAuth);
 
   runApp(
     MultiRepositoryProvider(
