@@ -43,6 +43,7 @@ class TransactionHistoryWidget extends StatelessWidget {
                           child: Text('No transaction\'s yet!'),
                         )
                       : ListView.builder(
+                          physics: const BouncingScrollPhysics(),
                           itemCount: transactions.length,
                           itemBuilder: (ctx, item) => TransactionWidget(
                             transaction: transactions[item],

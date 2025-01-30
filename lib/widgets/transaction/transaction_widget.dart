@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/color.dart';
 import '../../core/utils/date_time_utils.dart';
 import '../../data/model/transaction_model.dart';
 
@@ -20,11 +21,18 @@ class TransactionWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(
-                backgroundColor: Colors.grey,
-                foregroundColor: Colors.white,
-                child: Icon(Icons.shopping_bag_outlined),
-              ),
+              if (transaction.type == TransactionType.expense)
+                CircleAvatar(
+                  backgroundColor: Colors.grey.shade300,
+                  foregroundColor: secondaryColor,
+                  child: const Icon(Icons.shopping_bag_outlined),
+                )
+              else
+                CircleAvatar(
+                  backgroundColor: Colors.grey.shade300,
+                  foregroundColor: secondaryColor,
+                  child: const Icon(Icons.monetization_on_outlined),
+                ),
               const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,9 +55,12 @@ class TransactionWidget extends StatelessWidget {
           ),
           Text(
             transaction.amount.toString(),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
+              color: transaction.type == TransactionType.expense
+                  ? Colors.red
+                  : Colors.green,
             ),
           ),
         ],
