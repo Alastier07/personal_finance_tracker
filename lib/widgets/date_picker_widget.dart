@@ -24,12 +24,11 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: _selectDate,
+      readOnly: true,
       controller: widget.controller,
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          onPressed: _selectDate,
-          icon: const Icon(Icons.date_range),
-        ),
+        suffixIcon: const Icon(Icons.date_range),
         border: OutlineInputBorder(
           borderSide: const BorderSide(),
           borderRadius: BorderRadius.circular(8),
