@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/transaction/transaction_bloc.dart';
+import '../../blocs/transaction/transaction_state.dart';
 import 'transaction_widget.dart';
 
 class TransactionHistoryWidget extends StatelessWidget {
@@ -30,9 +33,26 @@ class TransactionHistoryWidget extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           Expanded(
-            child: ListView.builder(
-              itemCount: 2,
-              itemBuilder: (ctx, i) => const TransactionWidget(),
+            child: BlocBuilder<TransactionBloc, TransactionState>(
+              builder: (context, state) {
+                if (state is TransactionLoaded) {
+                  final transactions = state.transactions;
+
+                  return transactions.isEmpty
+                      ? const Center(
+                          child: Text('No transaction\'s yet!'),
+                        )
+                      : ListView.builder(
+                          itemCount: transactions.length,
+                          itemBuilder: (ctx, item) => TransactionWidget(
+                            transaction: transactions[item],
+                          ),
+                        );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ],

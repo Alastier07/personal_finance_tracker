@@ -8,9 +8,13 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   List<TransactionModel> transactions = [];
 
   TransactionBloc() : super(TransactionInitial()) {
-    on<AddTransaction>((event, emit) async {
+    on<FetchTransaction>((event, emit) {
+      emit(TransactionLoaded(transactions: List.from(transactions)));
+    });
+
+    on<AddTransaction>((event, emit) {
       transactions.add(event.transaction);
-      emit(TransactionLoaded(transactions: transactions));
+      emit(TransactionLoaded(transactions: List.from(transactions)));
     });
   }
 }

@@ -8,6 +8,7 @@ import 'blocs/auth/auth_event.dart';
 import 'blocs/login/login_bloc.dart';
 import 'blocs/register/register_bloc.dart';
 import 'blocs/transaction/transaction_bloc.dart';
+import 'blocs/transaction/transaction_event.dart';
 import 'blocs/user/user_bloc.dart';
 import 'screens/add_expense_screen.dart';
 import 'screens/login_screen.dart';
@@ -44,7 +45,7 @@ class FinanceTrackerApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => TransactionBloc(),
+          create: (context) => TransactionBloc()..add(FetchTransaction()),
         ),
       ],
       child: MaterialApp(

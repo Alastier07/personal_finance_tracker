@@ -9,6 +9,8 @@ abstract class TransactionEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class FetchTransaction extends TransactionEvent {}
+
 class AddTransaction extends TransactionEvent {
   final TransactionModel transaction;
 
