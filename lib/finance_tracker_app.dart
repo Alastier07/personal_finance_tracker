@@ -45,7 +45,9 @@ class FinanceTrackerApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => TransactionBloc()..add(FetchTransaction()),
+          create: (context) => TransactionBloc(
+            transactionRepository: RepositoryProvider.of(context),
+          )..add(FetchTransaction()),
         ),
       ],
       child: MaterialApp(
