@@ -8,7 +8,6 @@ import 'package:personal_finance_tracker/blocs/login/login_event.dart';
 import 'package:personal_finance_tracker/blocs/login/login_state.dart';
 import 'package:personal_finance_tracker/data/repository/auth_repository.dart';
 
-import '../data/repository/auth/auth_repository_test.mocks.dart';
 import 'login_bloc_test.mocks.dart';
 
 @GenerateMocks([AuthRepository, User])
