@@ -45,9 +45,9 @@ class WalletInfoWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              const Text(
-                '\$2,548.00',
-                style: TextStyle(
+              Text(
+                '\$ ${transactionBloc.totalBalance}',
+                style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -102,7 +102,7 @@ class WalletInfoWidget extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            '\$$amount',
+            '\$ $amount',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,

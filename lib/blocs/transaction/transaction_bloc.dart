@@ -14,6 +14,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
   double get totalAmountOfIncome => _totalAmountOfIncome;
   double get totalAmountOfExpenses => _totalAmountOfExpenses;
+  double get totalBalance => _totalAmountOfIncome - _totalAmountOfExpenses;
 
   TransactionBloc({required this.transactionRepository})
       : super(TransactionInitial()) {
