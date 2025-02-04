@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/color.dart';
+import '../../core/utils/currency_format_utils.dart';
 import '../../core/utils/date_time_utils.dart';
 import '../../data/model/transaction_model.dart';
 
@@ -54,7 +55,7 @@ class TransactionWidget extends StatelessWidget {
             ],
           ),
           Text(
-            transaction.amount.toString(),
+            currencyFormat(transaction.amount),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,

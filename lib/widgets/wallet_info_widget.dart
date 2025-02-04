@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/transaction/transaction_bloc.dart';
 import '../blocs/transaction/transaction_state.dart';
+import '../core/utils/currency_format_utils.dart';
 
 class WalletInfoWidget extends StatelessWidget {
   const WalletInfoWidget({
@@ -46,7 +47,7 @@ class WalletInfoWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '\$ ${transactionBloc.totalBalance}',
+                currencyFormat(transactionBloc.totalBalance),
                 style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -60,12 +61,12 @@ class WalletInfoWidget extends StatelessWidget {
                   amountCycleBuilder(
                     icon: Icons.arrow_circle_down_outlined,
                     title: 'Income',
-                    amount: transactionBloc.totalAmountOfIncome.toString(),
+                    amount: transactionBloc.totalAmountOfIncome,
                   ),
                   amountCycleBuilder(
                     icon: Icons.arrow_circle_up_outlined,
                     title: 'Expenses',
-                    amount: transactionBloc.totalAmountOfExpenses.toString(),
+                    amount: transactionBloc.totalAmountOfExpenses,
                   ),
                 ],
               ),
@@ -78,7 +79,7 @@ class WalletInfoWidget extends StatelessWidget {
 
   Column amountCycleBuilder({
     required String title,
-    String amount = '0',
+    double amount = 0,
     required IconData icon,
   }) =>
       Column(
@@ -102,7 +103,7 @@ class WalletInfoWidget extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            '\$ $amount',
+            currencyFormat(amount),
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
