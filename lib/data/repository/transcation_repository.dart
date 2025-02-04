@@ -15,4 +15,17 @@ class TransactionRepository {
   void saveTransactions(TransactionModel transaction) {
     hiveService.saveData(DateTime.now().toString(), transaction);
   }
+
+  double getTotalTransactionAmount(
+    List<TransactionModel> transactions,
+    TransactionType type,
+  ) {
+    final newTransaction =
+        transactions.where((trans) => trans.type == type).toList();
+
+    return newTransaction.fold<double>(
+      0.0, // initial value
+      (sum, transaction) => sum + transaction.amount, // function: combine
+    );
+  }
 }
