@@ -13,3 +13,5 @@ DateTime requestNewDateFromNow({
 }
 
 String defaultDateFormat(DateTime date) => DateFormat('MMMM d, y').format(date);
+
+String monthFromNow() => DateFormat('MMMM').format(DateTime.now());

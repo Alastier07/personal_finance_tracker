@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/transaction/transaction_bloc.dart';
 import '../blocs/transaction/transaction_state.dart';
 import '../core/utils/currency_format_utils.dart';
+import '../core/utils/date_time_utils.dart';
 
 class WalletInfoWidget extends StatelessWidget {
   const WalletInfoWidget({
@@ -28,10 +29,10 @@ class WalletInfoWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Total Balance',
                     style: TextStyle(
                       fontSize: 16,
@@ -39,9 +40,13 @@ class WalletInfoWidget extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  Icon(
-                    Icons.visibility_outlined,
-                    color: Colors.white,
+                  Text(
+                    monthFromNow(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
